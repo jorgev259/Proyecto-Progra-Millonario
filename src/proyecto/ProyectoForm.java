@@ -10,7 +10,6 @@ package proyecto;
  * @author kenne
  */
 public class ProyectoForm extends javax.swing.JFrame {
-
     /**
      * Creates new form ProyectoForm
      */
@@ -28,8 +27,8 @@ public class ProyectoForm extends javax.swing.JFrame {
     private void initComponents() {
 
         button1 = new java.awt.Button();
-        jLabel1 = new javax.swing.JLabel();
         button2 = new java.awt.Button();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -37,20 +36,41 @@ public class ProyectoForm extends javax.swing.JFrame {
         button1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         button1.setLabel("Iniciar");
         button1.setName(""); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(button1);
         button1.setBounds(380, 410, 140, 60);
+
+        button2.setLabel("Salir");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(button2);
+        button2.setBounds(50, 470, 100, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/millonarioform1.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 900, 540);
 
-        button2.setLabel("Salir");
-        getContentPane().add(button2);
-        button2.setBounds(50, 470, 100, 40);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        ProyectoForm2 regFace = new ProyectoForm2();
+        regFace.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_button2ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -79,10 +99,8 @@ public class ProyectoForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProyectoForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ProyectoForm().setVisible(true);
         });
     }
 

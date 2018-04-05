@@ -5,12 +5,14 @@
  */
 package proyecto;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kenne
  */
 public class ProyectoForm2 extends javax.swing.JFrame {
-
+    Datos datos = new Datos();
     /**
      * Creates new form ProyectoForm2
      */
@@ -75,6 +77,11 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         button2.getAccessibleContext().setAccessibleName("button2");
 
         button3.setLabel("Salir");
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(button3);
         button3.setBounds(80, 40, 41, 24);
         getContentPane().add(button4);
@@ -155,6 +162,10 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_button5ActionPerformed
 
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        JOptionPane.showMessageDialog(null, datos.preguntas[0]);
+    }//GEN-LAST:event_button3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,6 +197,7 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ProyectoForm2().setVisible(true);
+                
             }
         });
     }

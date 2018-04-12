@@ -5,6 +5,8 @@
  */
 package proyecto;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author kenne
@@ -62,6 +64,7 @@ public class ProyectoForm extends javax.swing.JFrame {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         ProyectoForm2 regFace = new ProyectoForm2();
+        regFace.setExtendedState(JFrame.MAXIMIZED_BOTH);
         regFace.setVisible(true);
         dispose();
     }//GEN-LAST:event_button1ActionPerformed

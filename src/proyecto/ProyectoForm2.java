@@ -5,21 +5,59 @@
  */
 package proyecto;
 
+import java.awt.Label;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author kenne
  */
-public class ProyectoForm2 extends javax.swing.JFrame {
-    Datos datos = new Datos();
+public class ProyectoForm2 extends javax.swing.JFrame {  
+    Millonario datos = new Millonario();
+    int[] premios = {0,100000,250000,500000,750000,1000000,2000000,2500000,3000000,5000000,7500000,10000000,12000000,15000000,20000000,25000000};
+    int[] zonasSeguras = {5,8,10,13};
+    String comodin50 = "false";
+    String[] datosComodin = {"",""};
+    int zonaSegura = 0;
+    int dineroActual = 0;
+    int dineroSalvo = 0;
+    int preguntaActual = 1;
+    
     /**
      * Creates new form ProyectoForm2
      */
     public ProyectoForm2() {
-        initComponents();
+        initComponents(); 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E u/M/y HH:MM a");
+        this.setTitle("Quien Quiere Ser Millonario " + dateFormat.format(new Date()));
+        cambiarPregunta();
     }
-
+    
+    public void cambiarPregunta(){
+        datos.cambiarPregunta();
+        ArrayList respuestas = new ArrayList<String>();
+        respuestas.addAll(Arrays.asList(datos.respuestas[datos.preguntaActual]));
+        Collections.shuffle(respuestas);
+        
+        numeroPregunta.setText(String.valueOf(preguntaActual));
+        label1.setText(datos.preguntas[datos.preguntaActual]);        
+        respA.setText(respuestas.get(0).toString());
+        respB.setText(respuestas.get(1).toString());
+        respC.setText(respuestas.get(2).toString());
+        respD.setText(respuestas.get(3).toString());
+    }
+    
+    public void terminarPartida(){
+        JOptionPane.showMessageDialog(this, "Has ganado un total de " + dineroSalvo + " colones!", "Felicidades!", JOptionPane.PLAIN_MESSAGE);
+        dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,17 +72,14 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         button1 = new java.awt.Button();
         button2 = new java.awt.Button();
         button3 = new java.awt.Button();
-        button4 = new java.awt.Button();
-        button5 = new java.awt.Button();
-        label9 = new java.awt.Label();
-        label8 = new java.awt.Label();
-        button6 = new java.awt.Button();
-        label6 = new java.awt.Label();
-        button7 = new java.awt.Button();
-        label7 = new java.awt.Label();
-        label2 = new java.awt.Label();
+        respB = new java.awt.Label();
+        respA = new java.awt.Label();
+        respC = new java.awt.Label();
+        respD = new java.awt.Label();
+        numeroPregunta = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        escalera = new javax.swing.JList<>();
+        retirar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -62,16 +97,29 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         label1.setAlignment(java.awt.Label.CENTER);
+        label1.setBackground(new java.awt.Color(35, 62, 149));
+        label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        label1.setForeground(new java.awt.Color(214, 144, 14));
         label1.setText("Pregunta");
         getContentPane().add(label1);
         label1.setBounds(200, 430, 880, 70);
 
         button1.setLabel("OP");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(button1);
         button1.setBounds(910, 40, 33, 24);
 
         button2.setLabel("50:50");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(button2);
         button2.setBounds(1000, 40, 47, 24);
         button2.getAccessibleContext().setAccessibleName("button2");
@@ -84,67 +132,83 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         });
         getContentPane().add(button3);
         button3.setBounds(80, 40, 41, 24);
-        getContentPane().add(button4);
-        button4.setBounds(210, 550, 360, 50);
-        button4.getAccessibleContext().setAccessibleName("A");
 
-        button5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button5ActionPerformed(evt);
+        respB.setBackground(new java.awt.Color(35, 62, 149));
+        respB.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        respB.setForeground(new java.awt.Color(214, 144, 14));
+        respB.setText("B");
+        respB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarRespuesta(evt);
             }
         });
-        getContentPane().add(button5);
-        button5.setBounds(740, 550, 360, 50);
-        button5.getAccessibleContext().setAccessibleName("B");
+        getContentPane().add(respB);
+        respB.setBounds(740, 560, 390, 33);
 
-        label9.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        label9.setText("B");
-        getContentPane().add(label9);
-        label9.setBounds(740, 560, 340, 33);
-
-        label8.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        label8.setText("A");
-        getContentPane().add(label8);
-        label8.setBounds(220, 560, 310, 33);
-        getContentPane().add(button6);
-        button6.setBounds(210, 640, 360, 50);
-        button6.getAccessibleContext().setAccessibleName("C");
-
-        label6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        label6.setText("C");
-        getContentPane().add(label6);
-        label6.setBounds(220, 650, 310, 33);
-
-        button7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button7ActionPerformed(evt);
+        respA.setBackground(new java.awt.Color(35, 62, 149));
+        respA.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        respA.setForeground(new java.awt.Color(214, 144, 14));
+        respA.setText("A");
+        respA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarRespuesta(evt);
             }
         });
-        getContentPane().add(button7);
-        button7.setBounds(740, 640, 360, 50);
-        button7.getAccessibleContext().setAccessibleName("D");
+        getContentPane().add(respA);
+        respA.setBounds(220, 560, 390, 33);
 
-        label7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        label7.setText("D");
-        getContentPane().add(label7);
-        label7.setBounds(740, 650, 340, 33);
+        respC.setBackground(new java.awt.Color(35, 62, 149));
+        respC.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        respC.setForeground(new java.awt.Color(214, 144, 14));
+        respC.setText("C");
+        respC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarRespuesta(evt);
+            }
+        });
+        getContentPane().add(respC);
+        respC.setBounds(220, 650, 390, 33);
 
-        label2.setAlignment(java.awt.Label.CENTER);
-        label2.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
-        label2.setText("#");
-        getContentPane().add(label2);
-        label2.setBounds(600, 160, 90, 70);
-        label2.getAccessibleContext().setAccessibleName("#pregunta");
+        respD.setBackground(new java.awt.Color(35, 62, 149));
+        respD.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        respD.setForeground(new java.awt.Color(214, 144, 14));
+        respD.setText("D");
+        respD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarRespuesta(evt);
+            }
+        });
+        getContentPane().add(respD);
+        respD.setBounds(740, 650, 390, 33);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        numeroPregunta.setAlignment(java.awt.Label.CENTER);
+        numeroPregunta.setBackground(new java.awt.Color(35, 62, 149));
+        numeroPregunta.setFont(new java.awt.Font("Arial", 0, 48)); // NOI18N
+        numeroPregunta.setForeground(new java.awt.Color(255, 255, 255));
+        numeroPregunta.setText("#");
+        getContentPane().add(numeroPregunta);
+        numeroPregunta.setBounds(600, 160, 90, 70);
+        numeroPregunta.getAccessibleContext().setAccessibleName("#pregunta");
+
+        escalera.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "0", "100000", "250000", "500000", "750000", "1000000", "2000000", "2500000", "3000000", "5000000", "7500000", "10000000", "12000000", "15000000", "20000000", "25000000" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        escalera.setSelectedIndex(0);
+        jScrollPane1.setViewportView(escalera);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(1120, 36, 130, 310);
+        jScrollPane1.setBounds(1120, 36, 130, 260);
+
+        retirar.setText("Retirarse");
+        retirar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retirarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(retirar);
+        retirar.setBounds(930, 100, 110, 23);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/Millonario.jpg"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -154,22 +218,66 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button7ActionPerformed
-
-    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button5ActionPerformed
-
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        JOptionPane.showMessageDialog(null, datos.preguntas[0]);
+        
     }//GEN-LAST:event_button3ActionPerformed
+
+    private void confirmarRespuesta(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarRespuesta
+        int response = JOptionPane.showConfirmDialog(null, "Repuesta definitiva?", "",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (response == JOptionPane.YES_OPTION) {
+            if(datos.respuestas[datos.preguntaActual][0].equals(((Label) evt.getSource()).getText())){
+                dineroActual = premios[preguntaActual];
+                
+                if(preguntaActual == 5 || preguntaActual == 8 || preguntaActual == 10 || preguntaActual == 13){
+                    dineroSalvo = dineroActual;
+                    zonaSegura = preguntaActual;
+                }
+                
+                preguntaActual++;
+                int[] select = {zonaSegura, preguntaActual};
+                escalera.setSelectedIndices(select);
+                cambiarPregunta();
+            }else{
+                terminarPartida();
+            }
+        }
+    }//GEN-LAST:event_confirmarRespuesta
+
+    private void retirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarActionPerformed
+        dineroSalvo = dineroActual;
+        terminarPartida();
+    }//GEN-LAST:event_retirarActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        ArrayList respuestas = new ArrayList<String>();
+        respuestas.addAll(Arrays.asList(Arrays.copyOfRange(datos.respuestas[datos.preguntaActual], 0, 2)));
+        Collections.shuffle(respuestas);
+        
+        JOptionPane.showMessageDialog(this, "Posibles respuestas: " + respuestas.get(0) + ", " + respuestas.get(1), "Comodin", JOptionPane.PLAIN_MESSAGE);
+        comodin50 = "true";
+        datosComodin[0] = String.valueOf(respuestas.get(0));
+        datosComodin[1] = String.valueOf(respuestas.get(1));
+        button2.setVisible(false);
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        Random random = new Random();
+        String respuesta;
+        if(comodin50.equals("false")){
+            respuesta = "A: " + random.nextInt(101) + "%\nB: " + random.nextInt(101) + "%\nC: " + random.nextInt(101) + "%\nD: " + random.nextInt(101) + "%";
+        }else{
+            respuesta = datosComodin[0] + ": " + random.nextInt(101) + "%\n" + datosComodin[1] + ": " + random.nextInt(101) + "%";
+        }
+        JOptionPane.showMessageDialog(this, respuesta, "Comodin", JOptionPane.PLAIN_MESSAGE);
+        button1.setVisible(false);
+    }//GEN-LAST:event_button1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -196,8 +304,7 @@ public class ProyectoForm2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProyectoForm2().setVisible(true);
-                
+                new ProyectoForm2().setVisible(true);                
             }
         });
     }
@@ -206,19 +313,16 @@ public class ProyectoForm2 extends javax.swing.JFrame {
     private java.awt.Button button1;
     private java.awt.Button button2;
     private java.awt.Button button3;
-    private java.awt.Button button4;
-    private java.awt.Button button5;
-    private java.awt.Button button6;
-    private java.awt.Button button7;
+    private javax.swing.JList<String> escalera;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
-    private java.awt.Label label8;
-    private java.awt.Label label9;
+    private java.awt.Label numeroPregunta;
+    private java.awt.Label respA;
+    private java.awt.Label respB;
+    private java.awt.Label respC;
+    private java.awt.Label respD;
+    private javax.swing.JButton retirar;
     // End of variables declaration//GEN-END:variables
 }

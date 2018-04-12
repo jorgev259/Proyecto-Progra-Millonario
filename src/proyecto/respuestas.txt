@@ -1,4 +1,4 @@
-Andrómeda
+﻿Andrómeda
 El Dragón
 El Escultor
 El Triangulo
@@ -8,10 +8,10 @@ dos tarjetas amarillas
 una tarjeta amarilla y una roja
 Lewis Carroll
 Edgar Allan Poe
-Opción incorrecta J.R.R Tolkien
+J.R.R Tolkien
 J.K Rowlin
 1945
-Opción incorrecta 1957
+1957
 1939
 1845
 Pluto
@@ -20,7 +20,7 @@ Goofy
 Minnie
 manada
 rebaño
-Opción incorrecta camada
+camada
 escuela
 7
 8
@@ -30,18 +30,18 @@ escuela
 306
 100
 106
-el inframundo
-el olimpo
-la tierra
+el Inframundo
+el Olimpo
+la Tierra
 el océano
-el amazonas
+el Amazonas
 el Nilo
 Mississippi
 el Titicaca
 Saturno
-Opción incorrecta; marte
-nibiru
-júpiter
+Marte
+Nibiru
+Júpiter
 vitamina C
 vitamina D
 vitamina E

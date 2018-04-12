@@ -7,21 +7,24 @@ package proyecto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
  * @author laboratorio
  */
-public class Datos {
+public class Millonario {
     public String[] preguntas;
-    public String[] respuestas;
-    public String[] correctas;
+    public String[][] respuestas;
+    public int preguntaActual = -1;
+    public ArrayList preguntasUsadas;
     
-    public Datos(){
+    public Millonario(){
         this.preguntas = new String[15];
-        this.respuestas = new String[15];
-        this.correctas = new String[15];
+        this.respuestas = new String[15][4];
+        this.preguntasUsadas = new ArrayList<>();
         
         try{
             int i = 0;
@@ -36,16 +39,27 @@ public class Datos {
             
             i = 0;
             int num_pregunta = 0;
-            Scanner s2 = new Scanner(new File("repuestas.txt"));
+            File file2 = new File("src/proyecto/respuestas.txt");
+            Scanner s2 = new Scanner(file2);
             while (s2.hasNextLine()){
-                respuestas[i] = s2.nextLine();
-                if(i % 3 == 0){
-                    correctas[num_pregunta] = respuestas[i];
+                respuestas[num_pregunta][i] = s2.nextLine();
+                if(i == 3){
                     num_pregunta += 1;
-                }
+                    i = 0;
+                }else{
+                    i++;
+                }               
             }
-            s2.close();          
+            s2.close();  
         } catch (FileNotFoundException exception) {}  
     }
     
+    public void cambiarPregunta(){
+        Random random = new Random();
+        if(preguntaActual != -1)
+            preguntasUsadas.add(preguntaActual);       
+        do{
+            preguntaActual = random.nextInt(15);
+        }while(preguntasUsadas.contains(preguntaActual));  
+    }    
 }
